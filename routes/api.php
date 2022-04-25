@@ -15,9 +15,13 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
+
+// Route::group(['middleware'=>['auth:sanctum']], function () { 
+ 
+
+
+// });
 Route::get("/user",[UserController::class,'index']);
+Route::post("/user",[UserController::class,'store'])
 

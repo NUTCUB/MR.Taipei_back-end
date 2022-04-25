@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
 class UserController extends Controller
 {
     /**
@@ -36,7 +36,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user =new User();
+        $user ->user_id =$request->user_id;
+        $user ->user_name =$request->user_name;
+        $select=User::where('user_id','like','%'.$request->user_id.'%')->get();
+
+        if(count($select)===0){
+           if($user->save()){
+            return response()->json(['message' => '新增成功']);
+        
+           }
+        }else{
+            return response()->json(['message' => '已有使用帳號了']);   
+        
+        }   
+       
+
+      
     }
 
     /**
@@ -45,9 +61,12 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id ,Request $request)
     {
-        //
+        $select=User::where('user_id', '=', $id)->get();
+        return $select;
+       
+        
     }
 
     /**
